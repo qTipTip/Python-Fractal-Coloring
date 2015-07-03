@@ -38,4 +38,3 @@ with open(OUT_FILE, 'w') as output:
                     z_new = COMPLEX_FUNCTION(z_new, COMPLEX_SEED)
             else:
                 output.write('%d, %d, %d, %s\n' % (i, j, NUMBER_OF_ITERATIONS, str(z_new)))
-
