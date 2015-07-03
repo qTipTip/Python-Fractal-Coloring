@@ -34,5 +34,6 @@ with open(out_file, 'w') as output:
                     break
                 else:
                     z_new = complex_function(z_new, complex_seed)
-            output.write('%d, %d, %d, %s\n' % (i, j, number_of_iterations, str(z_new)))
+            else:
+                output.write('%d, %d, %d, %s\n' % (i, j, number_of_iterations, str(z_new)))
 
