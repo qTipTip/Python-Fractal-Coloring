@@ -1,39 +1,41 @@
-# This script computes a fractal and writes
-# all interesting data to a raw file.
+""" This script computes a fractal and writes
+    all interesting data to a raw file."""
 
-from numpy import linspace
+import numpy as np
 
-out_file = 'generated_fractal.dat'
+OUT_FILE = 'generated_fractal.dat'
 
-resolution_x = 1028
-resolution_y = 1028
-window_of_reference_x = (-2, 1)
-window_of_reference_y = (-1, 1)
+RESOLUTION_X = 512
+RESOLUTION_Y = 512
+WINDOW_OF_REFERENCE_X = (-2, 1)
+WINDOW_OF_REFERENCE_Y = (-1, 1)
 
-number_of_iterations = 30
-complex_seed = complex(-0.4, 0.6)
-complex_function = lambda z, c : z*z + c
-bailout_value = 4
+NUMBER_OF_ITERATIONS = 30
+COMPLEX_SEED = complex(-0.4, 0.6)
+COMPLEX_FUNCTION = lambda z, c: z*z + c
+BAILOUT_VALUE = 4
 
-complex_grid_x = linspace(window_of_reference_x[0], window_of_reference_x[1], resolution_x)
-complex_grid_y = linspace(window_of_reference_y[0], window_of_reference_y[1], resolution_y)
+# pylint: disable=E1103
+COMPLEX_GRID_X = np.linspace(WINDOW_OF_REFERENCE_X[0], WINDOW_OF_REFERENCE_X[1], RESOLUTION_X)
+COMPLEX_GRID_Y = np.linspace(WINDOW_OF_REFERENCE_Y[0], WINDOW_OF_REFERENCE_Y[1], RESOLUTION_Y)
+# pylint: enable=E1103
 
-with open(out_file, 'w') as output:
-    output.write('#resolution_x = %d\n' % resolution_x) 
-    output.write('#resolution_y = %d\n' % resolution_y)
-    output.write('#number_of_iterations = %d\n' % number_of_iterations)
-    output.write('#complex_seed = %s\n' % str(complex_seed))
+with open(OUT_FILE, 'w') as output:
+    output.write('#resolution_x = %d\n' % RESOLUTION_X)
+    output.write('#resolution_y = %d\n' % RESOLUTION_Y)
+    output.write('#number_of_iterations = %d\n' % NUMBER_OF_ITERATIONS)
+    output.write('#complex_seed = %s\n' % str(COMPLEX_SEED))
 
-    for i, a in enumerate(complex_grid_x):
-        for j, b in enumerate(complex_grid_y):
+    for i, a in enumerate(COMPLEX_GRID_X):
+        for j, b in enumerate(COMPLEX_GRID_Y):
             z = complex(a, b)
             z_new = z
-            for n in range(number_of_iterations):
-                if abs(z_new) >= bailout_value:
+            for n in range(NUMBER_OF_ITERATIONS):
+                if abs(z_new) >= BAILOUT_VALUE:
                     output.write('%d, %d, %d, %s\n' % (i, j, n, str(z_new)))
                     break
                 else:
-                    z_new = complex_function(z_new, complex_seed)
+                    z_new = COMPLEX_FUNCTION(z_new, COMPLEX_SEED)
             else:
-                output.write('%d, %d, %d, %s\n' % (i, j, number_of_iterations, str(z_new)))
+                output.write('%d, %d, %d, %s\n' % (i, j, NUMBER_OF_ITERATIONS, str(z_new)))
 
