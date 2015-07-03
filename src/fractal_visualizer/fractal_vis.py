@@ -34,4 +34,3 @@ with open(INPUT_FILE) as data_in:
         # Done!
         pass
     IMAGE.show()
-
