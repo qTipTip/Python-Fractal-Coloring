@@ -10,26 +10,26 @@ from PIL import Image
 INPUT_FILE = '../fractal_generator/sample_fractal_512_512.dat'
 
 with open(INPUT_FILE) as data_in:
-    # We read the first four lines first, telling us what properties the fractals has 
+    # We read the first four lines first, telling us what properties the fractals has
     RESOLUTION_X = int(next(data_in).split(' ')[-1])
     RESOLUTION_Y = int(next(data_in).split(' ')[-1])
     NUMBER_OF_ITERATIONS = int(next(data_in).split(' ')[-1])
     COMPLEX_SEED = complex((next(data_in).split(' ')[-1]))
 
-    # We now initialize an empty bitmap 
-    image = Image.new('RGB', (RESOLUTION_X, RESOLUTION_Y ), 'black')
-    pixels = image.load()
-    
+    # We now initialize an empty bitmap
+    IMAGE = Image.new('RGB', (RESOLUTION_X, RESOLUTION_Y), 'black')
+    PIXELS = IMAGE.load()
+
     # Iterate over the complex numbers, given by their indices in the complex grid
     try:
         while data_in.next():
-            in_line = next(data_in).split(',')
-            x = int(in_line[0])
-            y = int(in_line[1])
-            iterations = int(in_line[2])
-            if iterations == NUMBER_OF_ITERATIONS:
-                pixels[x, y] = (255,255,255)
-    except:
+            INPUT_LINE = next(data_in).split(',')
+            X = int(INPUT_LINE[0])
+            Y = int(INPUT_LINE[1])
+            ITERATIONS = int(INPUT_LINE[2])
+            if ITERATIONS == NUMBER_OF_ITERATIONS:
+                PIXELS[X, Y] = (255, 255, 255)
+    except StopIteration:
         # Done!
         pass
-    image.show()
+    IMAGE.show()
