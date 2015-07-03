@@ -5,7 +5,9 @@ color based on a color_function and a color_palette.
 """
 
 from PIL import Image
-
+import sys
+sys.path.append('../color_functions/')
+from color_func import ColorFunctions
 # We first start by reading in the .dat file
 INPUT_FILE = '../fractal_generator/sample_fractal_512_512.dat'
 COLOR_FUNCTION = lambda: (255, 255, 255)
