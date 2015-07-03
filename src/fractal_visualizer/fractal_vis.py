@@ -8,6 +8,7 @@ from PIL import Image
 
 # We first start by reading in the .dat file
 INPUT_FILE = '../fractal_generator/sample_fractal_512_512.dat'
+color_function = lambda: (255, 255, 255)
 
 with open(INPUT_FILE) as data_in:
     # We read the first four lines first, telling us what properties the fractals has
@@ -28,8 +29,9 @@ with open(INPUT_FILE) as data_in:
             Y = int(INPUT_LINE[1])
             ITERATIONS = int(INPUT_LINE[2])
             if ITERATIONS == NUMBER_OF_ITERATIONS:
-                PIXELS[X, Y] = (255, 255, 255)
+                PIXELS[X, Y] = color_function()
     except StopIteration:
         # Done!
         pass
     IMAGE.show()
+
