@@ -9,9 +9,9 @@ import sys
 sys.path.append('../color_functions/')
 from color_func import ColorFunctions
 # We first start by reading in the .dat file
-INPUT_FILE = '../fractal_generator/sample_fractal_512_512.dat'
+INPUT_FILE = '../fractal_generator/generated_fractal.dat'
 
-with open(INPUT_FILE) as data_in:
+with open(INPUT_FILE, 'r') as data_in:
     # We read the first four lines first, telling us what properties the fractals has
     RESOLUTION_X = int(next(data_in).split(' ')[-1])
     RESOLUTION_Y = int(next(data_in).split(' ')[-1])
@@ -25,15 +25,11 @@ with open(INPUT_FILE) as data_in:
     PIXELS = IMAGE.load()
 
     # Iterate over the complex numbers, given by their indices in the complex grid
-    try:
-        while data_in.next():
-            INPUT_LINE = next(data_in).split(',')
-            X = int(INPUT_LINE[0])
-            Y = int(INPUT_LINE[1])
-            ITERATIONS = int(INPUT_LINE[2])
-            if ITERATIONS < NUMBER_OF_ITERATIONS:
-                PIXELS[X, Y] = colr(indx(COLOR_FUNCTION.iteration_count_coloring(INPUT_LINE)))
-    except StopIteration:
-        # Done!
-        pass
+    for line in list(data_in):
+        INPUT_LINE = line.split(',')
+        X = int(INPUT_LINE[0])
+        Y = int(INPUT_LINE[1])
+        ITERATIONS = int(INPUT_LINE[2])
+        if ITERATIONS < NUMBER_OF_ITERATIONS:
+            PIXELS[X, Y] = colr(indx(COLOR_FUNCTION.iteration_count_coloring(INPUT_LINE)))
     IMAGE.show()
