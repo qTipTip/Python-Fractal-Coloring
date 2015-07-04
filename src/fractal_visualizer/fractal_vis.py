@@ -10,7 +10,6 @@ sys.path.append('../color_functions/')
 from color_func import ColorFunctions
 # We first start by reading in the .dat file
 INPUT_FILE = '../fractal_generator/sample_fractal_512_512.dat'
-COLOR_FUNCTION = lambda: (255, 255, 255)
 
 with open(INPUT_FILE) as data_in:
     # We read the first four lines first, telling us what properties the fractals has
@@ -18,7 +17,9 @@ with open(INPUT_FILE) as data_in:
     RESOLUTION_Y = int(next(data_in).split(' ')[-1])
     NUMBER_OF_ITERATIONS = int(next(data_in).split(' ')[-1])
     COMPLEX_SEED = complex((next(data_in).split(' ')[-1]))
-
+    COLOR_FUNCTION = ColorFunctions(NUMBER_OF_ITERATIONS)
+    indx = COLOR_FUNCTION.color_index
+    colr = COLOR_FUNCTION.get_color
     # We now initialize an empty bitmap
     IMAGE = Image.new('RGB', (RESOLUTION_X, RESOLUTION_Y), 'black')
     PIXELS = IMAGE.load()
@@ -30,8 +31,8 @@ with open(INPUT_FILE) as data_in:
             X = int(INPUT_LINE[0])
             Y = int(INPUT_LINE[1])
             ITERATIONS = int(INPUT_LINE[2])
-            if ITERATIONS == NUMBER_OF_ITERATIONS:
-                PIXELS[X, Y] = COLOR_FUNCTION()
+            if ITERATIONS < NUMBER_OF_ITERATIONS:
+                PIXELS[X, Y] = colr(indx(COLOR_FUNCTION.iteration_count_coloring(INPUT_LINE)))
     except StopIteration:
         # Done!
         pass
