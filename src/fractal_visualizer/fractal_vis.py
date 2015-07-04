@@ -25,7 +25,7 @@ with open(INPUT_FILE, 'r') as data_in:
     PIXELS = IMAGE.load()
 
     # Iterate over the complex numbers, given by their indices in the complex grid
-    for line in list(data_in):
+    for line in data_in:
         INPUT_LINE = line.split(',')
         X = int(INPUT_LINE[0])
         Y = int(INPUT_LINE[1])
