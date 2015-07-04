@@ -25,14 +25,14 @@ with open(OUT_FILE, 'w') as output:
     output.write('#resolution_y = %d\n' % RESOLUTION_Y)
     output.write('#number_of_iterations = %d\n' % NUMBER_OF_ITERATIONS)
     output.write('#complex_seed = %s\n' % str(COMPLEX_SEED))
-
-    for i, b in enumerate(COMPLEX_GRID_Y):
-        for j, a in enumerate(COMPLEX_GRID_X):
+    output.write('#bailout_value = %f\n' % float(BAILOUT_VALUE))
+    for i, a in enumerate(COMPLEX_GRID_X):
+        for j, b in enumerate(COMPLEX_GRID_Y):
             z = complex(a, b)
             z_new = z
             for n in range(NUMBER_OF_ITERATIONS):
                 if abs(z_new) >= BAILOUT_VALUE:
-                    output.write('%d, %d, %d, %s\n' % (i, j, n, str(z_new)))
+                    output.write('%d, %d, %d, %f\n' % (i, j, n, abs(z_new)))
                     break
                 else:
                     z_new = COMPLEX_FUNCTION(z_new, COMPLEX_SEED)

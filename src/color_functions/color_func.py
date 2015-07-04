@@ -10,18 +10,26 @@ class ColorFunctions(object):
     """ A class containing various color functions, as well as a color index
     function and a function that composes these two """
 
-    def __init__(self, max_iterations):
+    def __init__(self, max_iterations, fractal_power, bailout_value):
         self.max_iterations = max_iterations
+        self.fractal_power = fractal_power
+        self.bailout_value = bailout_value
 
     def iteration_count_coloring(self, input_line):
         return int(input_line[2]) / float(self.max_iterations)
+
+    def continuous_iteration_count(self, input_line):
+        p = self.fractal_power
+        M = self.bailout_value
+        N = int(input_line[2])
+        mag = float(input_line[3])
+        val =  N + (M**p - mag) / float(M**p - M)
 
     def color_index(self, u, k=2.5, u_0=0):
         """
         Returns a color-index between 0 and 1 based on some metric.
         """
         return u
-
     def get_color(self, index):
         """
         Given a color index returns an RGB color.  I might implement other

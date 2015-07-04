@@ -17,7 +17,8 @@ with open(INPUT_FILE, 'r') as data_in:
     RESOLUTION_Y = int(next(data_in).split(' ')[-1])
     NUMBER_OF_ITERATIONS = int(next(data_in).split(' ')[-1])
     COMPLEX_SEED = complex((next(data_in).split(' ')[-1]))
-    COLOR_FUNCTION = ColorFunctions(NUMBER_OF_ITERATIONS)
+    BAILOUT_VALUE = float((next(data_in).split(' ')[-1]))
+    COLOR_FUNCTION = ColorFunctions(NUMBER_OF_ITERATIONS, 2, BAILOUT_VALUE)
     indx = COLOR_FUNCTION.color_index
     colr = COLOR_FUNCTION.get_color
     # We now initialize an empty bitmap
@@ -25,11 +26,11 @@ with open(INPUT_FILE, 'r') as data_in:
     PIXELS = IMAGE.load()
 
     # Iterate over the complex numbers, given by their indices in the complex grid
-    for line in data_in:
+    for line in list(data_in):
         INPUT_LINE = line.split(',')
         X = int(INPUT_LINE[0])
         Y = int(INPUT_LINE[1])
         ITERATIONS = int(INPUT_LINE[2])
         if ITERATIONS < NUMBER_OF_ITERATIONS:
-            PIXELS[X, Y] = colr(indx(COLOR_FUNCTION.iteration_count_coloring(INPUT_LINE)))
+            PIXELS[X, Y] = colr(indx(COLOR_FUNCTION.continuous_iteration_count(INPUT_LINE)))
     IMAGE.show()
